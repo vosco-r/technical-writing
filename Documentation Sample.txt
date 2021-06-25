@@ -1,0 +1,190 @@
+Rebooting Procedures (ISP)
+
+To reboot the ISP:
+ 
+Click on the Start button (in the lower left)
+Then Shutdown 
+A box will appear that has three prompts (two drop down boxes and one input field, for comment)
+The first box allows you to choose what kind of shutdown you want (i.e. Restart, Shutdown or Disconnect). 
+For a reboot, you will want to choose Restart
+The second will also be a drop down bar that allows you to specify if this was a planned action
+The final field is for a comment on why you are rebooting the ISP. Type in a comment and click OK.  
+Hold a ping on the ISP until it is back up. You can also log back into the server to verify everything came up normally.
+ 
+When rebooting ISPs; install any updates that are ready to be installed. Follow the instructions below:
+ 
+Click on the yellow Windows update icon (located in the system tray, at the lower right corner)
+Make sure Express Install is selected and click Install.
+If the yellow  HYPERLINK "onenote:" \l "General%20Server%20Systems&section-id={201CEE57-6ADE-4F33-BE0E-97963A21FC14}&page-id={6BBF4042-2E5B-4258-A06D-01DD258F470E}&object-id={E113B37A-A918-0F25-211D-38D383E93A93}&E&base-path=gofs\\departments\\Helpdesk\\Documentation\\Troubleshooting%20Guide\\Servers.one" Windows update shield icon is missing
+Open a command prompt and type 'wuauclt /detectnow'  (without the '  ')
+If the shield still does not appear, there are no updates available. Make a note in the ticket and continue with the reboot. If there are 3 or more with no updates, send an e-mail to the Server Systems On-call (not the group), so they are aware and can investigate further. 
+If there are any other issues during the reboot, continue with the reboot, make notes in the ticket and assign the ticket to the Server Systems group
+Reboot the server
+
+
+
+
+
+
+
+
+Mochasoft - Setting Up Session
+ 
+ 
+Right click on the Start button
+Select Explore
+Go to the desktop folder of the user, for example asstmgrxx or the username ([first name].[last name]) 
+On the C Drive > Documents and Settings > [User name] > Desktop
+Right click on the mocha session and select Properties
+Under the Shortcut tab, add /d dxxxdxxx /n dxxxdxxx /h 400prod (for Production session) or 400devl (for Test session) /c# (use a different number for each session on the user's desktop, this will allow for different colors and fonts for each session) /s1 /r1 (the last two are for store users, to restrict settings) within the Target as seen below (for example device d033d025 is used)
+The 'Start in:' setting is not required, you can leave it blank
+The session will not open if that setting is wrong 
+Verify that the Mocha session opens
+ 
+ 
+ INCLUDEPICTURE "../Local%20Settings/Temp/msohtmlclip1/02/clip_image001.png" \* MERGEFORMAT 
+ 
+Once you have finished with the above process you can verify the following settings:
+ 
+Open the Mocha session from the desktop. 
+Click on Settings at the top of the screen. 
+Make sure Typeahead has a check mark next to it 
+Next click on Termtype. This will open a dialog box with some settings to adjust. Make sure that the termtype is set to:  IBM-3477-FC : 27 * 132 color display.  The other setting that you will need to set here is the device name in the blank space provided. Store Device name’s may reflect the address of the tube for example: DxxxDzzz (where xxx is the 3 digit store number and zzz is the terminal identifier, example: D047D021, pricing terminal at store 47)
+General Office Device name’s may reflect the IP address of the terminal but may also be numbered randomly, example DxxxDzzzz (where xxx is the general office and zzzz is the identifier) D000D242A or a random number D000D550B. If there are more than one Mocha Soft sessions to name on a terminal, add an A, B, or C at the end of the name for example D000D550A.
+Click on the ‘Display (LTTI) last transaction time indicator in the status line’.  
+Click on the ok button to apply the settings.
+ Go back to Settings and click on Keyboard Layout. There are four items that should be checked in Keyboard Layout
+Field exit deletes characters at cursor position.
+Enable Hotspots
+Mouse wheel scrolling works as Page up/down
+Shift arrow as select (for copy to clipboard)
+Press: Save to File. 
+Press the close and then open buttons on the task bar in Mocha Soft. 
+The following settings will not be prompted for, when using the /h and /r switches
+At open go to the blank space and enter 400prod (or the IP Address: 10.21.10.5 (test sessions are 400devl or 10.21.10.3). 
+Click on the Advanced button and click on 'Make a connection to the AS/400' and Exit on session termination. Press ok.
+
+
+
+
+
+
+
+
+
+
+
+Reprinting End of Day reports
+ 
+The following is a list of the reports that get printed out during the store close:
+ 
+Auto Generated Reports
+Department Analysis Report – Key (DeptKeyEntry.snp)
+Department Analysis Report – Sales (DeptSales.snp)
+Department Analysis Report – Stats (DeptStats.snp)
+Store Sales Report (StoreSalesAll.snp)
+EFT Reports
+Daily Deposit Settlement (bgddiset.spl)
+Terminal Activity Report (bgactrpt.spl)
+Store Totals Report (bgstrrpt.spl)
+ 
+To reprint any of the reports after 8:00am (Mountain), open a UNC path and go to  HYPERLINK "file:///\\\\10.21.0.143\\DailyNCRReports" \\10.21.0.143\DailyNCRReports. From here you can select the store and then the date of the reports. Then you can either email them to the store or print them to the store printer.
+ 
+To reprint the auto generated reports before 8:00am (Mountain), log into the active Primary and explore to ACS\Back Office\Data\ASW Filed Reports. From here, you can open the reports you want to print and click on the Print button. If the tax exempt report is not present or shows in error and the store should have one and they had tax exempt sales, you can re-run the process (see listing above for " HYPERLINK "onenote:" \l "NCR%20Server%20Side&section-id={201CEE57-6ADE-4F33-BE0E-97963A21FC14}&page-id={386C5196-2A91-4ADF-9540-CE3E227E1865}&object-id={2CB06C8A-B572-0728-0EE8-EEB5F2C21496}&C8&base-path=gofs\\departments\\Helpdesk\\Documentation\\Troubleshooting%20Guide\\Servers.one" Tax Exempt report")
+To reprint the EFT reports before 8:00am (Mountain). Then go to ACS\Server\Data, find the following files and print them as needed:
+ 
+bgddiset.spl  -  Daily Deposit Settlement
+bgactrpt.spl  -  Terminal Activity Report
+bgstrrpt.spl   -  Store Totals Report
+ 
+The last set of reports are in the following location, ACS\Server\Data\host\comm
+ 
+oper_front_end.txt   -  Hourly Front End
+hr_front_end.txt   -  Operator Front End
+ 
+**Make sure these reports show the current date as their modify date.
+
+
+
+
+
+
+
+
+
+
+
+
+Gun goes to 'Agent Not Found' during setup
+ 
+If the scan gun sits at 'Agent Not Found' for any extended length of time and does not continue on to 'applying adapter profile', try the following steps:
+ 
+The gun should be on the Avalanche screen, tap on the File menu
+This will drop down the menu, select Settings
+A box will pop up, prompting to Input Password (this is 'system')
+The next box to pop up should have a field for the Manager Address
+Make sure that the address is the ISP of the store
+If it is blank, enter the address of the store's ISP
+Click OK
+The gun should start trying to connect
+If it does not, Click on File again and select Connect from the menu
+ 
+If setting the manager address does not work (or if the entry was already there). Try the following:
+ 
+Log into the store's ISP and click on START and select 'Run'
+In the 'Run' command line type 'Services.msc'
+Verify that the Wavelink Avalanche Agent service is running
+If the service is not running, start it
+If the service is running, restart it
+Have the user try to reconnect the scan gun (File > Connect)
+
+
+Loading Software on MC3090
+ 
+Put the SD card with the software load on it in the device (behind battery).     
+Turn the device on (back cover must be on).
+If a sample loads, hit exit to get to the desktop.
+From the Windows desktop double click on “My Device”.
+Open “Storage Card”.
+Open MC3090 folder.
+Run “WinCo_3090_Load”.
+Device will load to OSRom update screen. Put the device in the charger(cradle). 
+**Note: Device usually does not have enough charge to complete update without  putting it in the charger. The device will prompt for AC power, Retry or Abort
+The device will automatically reboot and load to an alignment screen.
+Complete the alignment
+Press Enter to accept the settings, if you are satisfied with the alignment
+After the alignment is completed, the device should load to Avalanche. The software load is done.
+Remember to the take the SD card out of the device.
+Do not do a scan to config on the MC3090 guns until they are at the store (except for testing)
+ 
+Loading Software on MC7090
+ 
+On the right hand side of the MC70 unscrew the two screws located below the yellow & gray buttons. Insert the SD card with label facing up. (It will only fit one way). Put MC70 into the cradle.
+The MC70 will automatically load to an Updating screen (Updating Operating System - this will take approximately 10 minutes).
+Next the device will load to the green Windows Mobile screen, prompting to tap the screen. And  then the device will load to the alignment screen.
+The device will load to the Windows Mobile desktop and will continue the install process (Winco MC7090 Staging Utility - this will take approximately 5 more minutes).
+When the load is done the screen will display Installation Complete.
+Power off the terminal and remove the SanDisk Card. You are now done with the SD card slot. You can replace slot cover now.
+Cold boot the unit by pressing 1, 9, and the power button. Then release power and then 1, 9.
+You should see the WinCo Foods splash screen (red WinCo Foods on a white background). 
+The gun will boot to Avalanche and now you are done.
+
+
+#Loading Software on MC3190
+ 
+* Put the *Load* SD card in the device (behind the battery)
+* Power the device on (back cover must be on)
+	* If a sample loads, hit exit to get to the desktop.
+* From the Windows desktop, double click on *My Device*
+* Open *Storage Card*
+	* If the *Storage Card* is not visible, try reseating the SD Card
+* Run *3190_OSUpdate*
+* The device will load to *OSRom* update screen. Put the device in the charger (cradle).
+	**Note:** Device usually does not have enough charge to complete update without putting it in the charger. The device will prompt for AC power, Retry or Abort.
+* After the update, the device will automatically load to an alignment screen
+	* Complete the alignment
+	* Press Enter to accept the settings, if you are satisfied with the alignment
+* After the alignment is completed, the device should load to Avalanche. The software load is done.
+	**Note:** Remember to the take the SD card out of the device.
+* Do not do a scan-to-config on the MC3190 scan guns until they are at the store (except for testing)
+
